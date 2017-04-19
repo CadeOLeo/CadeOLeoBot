@@ -9,33 +9,43 @@ exports.cadeOLeoVer = function cadeOLeoVer (req, res) {
 
   var date1, date2;
   var leoBirthday = new Date('2015-10-22');
-  var today = new Date();
-  var vleoToday = false;
+  var today = new Date(Date.UTC(
+    (new Date()).getUTCFullYear(),
+    (new Date()).getUTCMonth(),
+    (new Date()).getUTCDate()
+  ));
+  var vLeo = false;
+  var vToday = false;
 
-  try {
-    date1 = new Date(req.query.date1);
-    date2 = new Date(req.query.date2);
-  } catch(err) {
-    console.log(err);
-  }
+  date1 = new Date(req.query.date1);
+  date2 = new Date(req.query.date2);
 
   if (
-    isNaN( date1.getTime())
-    || isNaN( date2.getTime())
+    isNaN(date1.getTime())
+    && isNaN(date2.getTime())
   ) {
     date1 = leoBirthday;
     date2 = today;
-    vLeoToday = true;
+    vLeo = true;
+    vToday = true;
+  } else if (isNaN(date1.getTime()) ) {
+    date1 = today;
+    vToday = true;
+  } else if (isNaN(date2.getTime()) ) {
+    date2 = today;
+    vToday = true;
   }
-
+  
   var v = CadeOLeo.Ver.v(date1, date2);
 
-  console.log(v);
-  res.send({
-    "version": v,
-    "date1": date1,
-    "date2": date2,
-    "vLeoToday": true
-  });
+  res.send(
+    {
+      "version": v,
+      "date1": date1,
+      "date2": date2,
+      "vLeo": vLeo,
+      "vToday": vToday
+    }
+  );
   res.status(200).end();
 };

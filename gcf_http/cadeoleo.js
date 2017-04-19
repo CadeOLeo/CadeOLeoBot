@@ -10,9 +10,17 @@ CadeOLeo.Ver = (function() {
         var b = moment.utc(dateStart);
         var c = moment.preciseDiff(a, b, true);
 
-        years  = c.years;
-        months = c.months;
-        days   = c.days;
+        if (c === '') {
+            years  = 0;
+            months = 0;
+            days   = 0;
+        } else {
+            years  = c.years;
+            months = c.months;
+            days   = c.days;
+        }
+
+        
 
         return 'v' + years + '.' + months + '.' + days;
     }
