@@ -1,0 +1,82 @@
+! BOTML 1
+
+# Fallback:
+#  > *
+#  < Como posso te ajudar?
+#    - [Calcule sua versão], [Versão do Léo hoje], [Site CadeOLeo!Ver], [...]
+#  > [Versão do Léo hoje]
+#  < Hoje a versão do Léo é: v1.5.28
+#    Como posso te ajudar?
+#    - [Calcule sua versão], [Versão do Léo hoje], [Site CadeOLeo!Ver], [...]
+#  > [Calcule sua versão]
+#  < Ok. Preciso da data para calcular.
+#    Digite o ano com 4 dígitos:
+#  > 1985
+#  < Ok, ano 1985. Agora, digite o mês com 2 dígitos:
+#  > 06
+#  < Ok, mês 06. Agora, digite o dia com 2 dígitos:
+#  > 24
+#  < Certo, dia 24. Data 24/06/1985.
+#    Sua versão hoje é: v31.9.26.
+#    Como posso te ajudar?
+#    - [Calcule sua versão], [Versão do Léo hoje], [Site CadeOLeo!Ver], [...]
+#  > [Site CadeOLeo!Ver]
+#  < O site é https://cadeoleo.github.io, pode compartilhar!
+#    Como posso te ajudar?
+#    - [Calcule sua versão], [Versão do Léo hoje], [Site CadeOLeo!Ver], [...]
+#  > [Versão do Léo hoje]
+#  < Ok, nenhuma opção. Se quiser falar comigo de novo, é só chamar!
+
+~ workflow
+~ [default question]
+
+~ default question
+< Como posso te ajudar?
+? [default question list]
+
+# The workflow relies on a prompt list
+= default question list
+- /calc
+- /leo
+- /site
+- ...
+
+~ survey
+< [hello] sir. Please answer this quick survey to help us better know you. [ok]?
+> [ok]
+< Great!
+~ [age]
+~ [city of birth]
+~ [email address]
+< [ok]. We'll keep in touch with you over $email.
+
+~ age
+< How old are you?
+> #{age}
+> #{age} years old
+< [ok]
+
+~ city of birth
+< And where were you born?
+> * in *{city}
+> * near *{city}
+> *{city}
+< [ok]
+
+~ email address
+< What is your email address?
+> * is *{email}
+> *{email}
+
+# dictionnaries
+
+= start
+- hello
+- hi
+- start
+- /start
+
+# Make the workflow executable again.
+
+> [start]
+~ [workflow]
